@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Документи{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Документи</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-3">
+                <a href="{{ url_for('docs.create') }}" class="btn btn-military">
+                    <i class="bi bi-plus-lg"></i> Створити новий документ
+                </a>
+            </div>
+            
+            {% if documents %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Номер</th>
+                            <th>Тип</th>
+                            <th>Статус</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doc in documents %}
+                        <tr>
+                            <td>{{ doc.date.strftime('%d.%m.%Y') }}</td>
+                            <td>{{ doc.number }}</td>
+                            <td>{{ doc.doc_type }}</td>
+                            <td>
+                                <span class="badge {% if doc.status == 'active' %}bg-success{% elif doc.status == 'draft' %}bg-warning{% else %}bg-danger{% endif %}">
+                                    {{ doc.status }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('docs.view', id=doc.id) }}" class="btn btn-sm btn-military">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">Немає документів для відображення</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

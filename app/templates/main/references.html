@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}ВТМ - {{ title }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2>{{ title }}</h2>
+    </div>
+    <div class="col text-end">
+        <button class="btn btn-military" data-bs-toggle="modal" data-bs-target="#addItemModal">
+            <i class="bi bi-plus-lg"></i> Додати
+        </button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link {% if type == 'services' %}active{% endif %}" href="{{ url_for('main.references', type='services') }}">
+                    Служби
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if type == 'suppliers' %}active{% endif %}" href="{{ url_for('main.references', type='suppliers') }}">
+                    Постачальники
+                </a>
+            </li>
+        </ul>
+
+        {% if type == 'services' %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Код</th>
+                        <th>Назва</th>
+                        <th>Статус</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>
+                            <span class="badge {% if item.is_active %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ 'Активна' if item.is_active else 'Неактивна' }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="editService({{ item.id }})">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteService({{ item.id }})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Код</th>
+                        <th>Назва</th>
+                        <th>Контактна особа</th>
+                        <th>Телефон</th>
+                        <th>Статус</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.contact_person or '-' }}</td>
+                        <td>{{ item.phone or '-' }}</td>
+                        <td>
+                            <span class="badge {% if item.is_active %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ 'Активний' if item.is_active else 'Неактивний' }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="editSupplier({{ item.id }})">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteSupplier({{ item.id }})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addItemModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Додати {{ title[:-1] if title.endswith('и') else title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addItemForm">
+                    {% if type == 'services' %}
+                    <div class="mb-3">
+                        <label class="form-label">Код</label>
+                        <input type="text" class="form-control" name="code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Назва</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Опис</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                    {% else %}
+                    <div class="mb-3">
+                        <label class="form-label">Код</label>
+                        <input type="text" class="form-control" name="code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Назва</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Контактна особа</label>
+                        <input type="text" class="form-control" name="contact_person">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" class="form-control" name="phone">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Адреса</label>
+                        <textarea class="form-control" name="address" rows="2"></textarea>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                <button type="button" class="btn btn-military" onclick="saveItem()">Зберегти</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function saveItem() {
+    const form = document.getElementById('addItemForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    
+    fetch(`/api/{{ type }}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert('Помилка при збереженні');
+        }
+    });
+}
+
+function editService(id) {
+    // TODO: Implement service editing
+}
+
+function editSupplier(id) {
+    // TODO: Implement supplier editing
+}
+
+function deleteService(id) {
+    if (confirm('Ви впевнені, що хочете видалити цю службу?')) {
+        fetch(`/api/services/${id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Помилка при видаленні');
+            }
+        });
+    }
+}
+
+function deleteSupplier(id) {
+    if (confirm('Ви впевнені, що хочете видалити цього постачальника?')) {
+        fetch(`/api/suppliers/${id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Помилка при видаленні');
+            }
+        });
+    }
+}
+</script>
+{% endblock %}

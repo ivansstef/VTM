@@ -1,0 +1,105 @@
+/* Military Theme Colors */
+:root {
+    --military-green: #4B5320;
+    --military-brown: #8B7355;
+    --military-gray: #545454;
+    --military-light: #E8E8E8;
+}
+
+/* Military Theme Classes */
+.bg-military {
+    background-color: var(--military-green);
+}
+
+.btn-military {
+    background-color: var(--military-green);
+    color: white;
+}
+
+.btn-military:hover {
+    background-color: var(--military-brown);
+    color: white;
+}
+
+/* Sidebar Styles */
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    background: var(--military-light);
+    transition: all 0.3s;
+}
+
+.sidebar.active {
+    margin-left: -250px;
+}
+
+.sidebar .sidebar-header {
+    padding: 20px;
+    background: var(--military-green);
+    color: white;
+}
+
+.sidebar ul li a {
+    padding: 10px;
+    display: block;
+    color: var(--military-gray);
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    background: var(--military-green);
+    color: white;
+}
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* Login Page */
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0;
+}
+
+.form-control {
+    border: 1px solid var(--military-gray);
+}
+
+.form-control:focus {
+    border-color: var(--military-green);
+    box-shadow: 0 0 0 0.2rem rgba(75, 83, 32, 0.25);
+}
+
+/* Custom Font Sizes */
+.h4 {
+    font-size: 1.5rem;
+}
+
+/* Flash Messages */
+.alert-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        margin-left: -250px;
+    }
+    .sidebar.active {
+        margin-left: 0;
+    }
+}
