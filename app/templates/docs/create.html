@@ -8,6 +8,7 @@
     <div class="card">
         <div class="card-body">
             <form method="POST">
+                {{ csrf_token() }}
                 <div class="mb-3">
                     <label for="number" class="form-label">Номер документа</label>
                     <input type="text" class="form-control" id="number" name="number" placeholder="Введіть номер">
