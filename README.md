@@ -1,5 +1,9 @@
 # VTM (Військово-Технічне Майно)
 
+![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
+![Python](https://img.shields.io/badge/python-3.12+-brightgreen.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 Система обліку військово-технічного майна для автоматизації роботи начальника складу.
 
 ## 🎯 Основні можливості

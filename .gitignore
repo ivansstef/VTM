@@ -35,16 +35,29 @@ env/
 # Database
 *.db
 *.sqlite3
+instance/
 
-# Backups
+# Project specific
 backup/*
 !backup/.gitkeep
+uploads/
+tests/logs/*
+!tests/logs/.gitkeep
+
+# Documentation
+!doc/*.md
+!doc/images/
 
 # Logs
 *.log
 logs/
 log/
 
-# Others
+# OS specific
 .DS_Store
 Thumbs.db
+
+# Android build
+android/
+*.apk
+beeware_build/
