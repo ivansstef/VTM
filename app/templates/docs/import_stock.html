@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}ВТМ - Імпорт залишків{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4">Імпорт залишків</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {{ csrf_token() }}
+                    <div class="mb-3">
+                        <label class="form-label">Оберіть файл Excel</label>
+                        <input type="file" class="form-control" name="file" accept=".xlsx,.xls">
+                        <div class="form-text">Підтримуються файли Excel (.xlsx, .xls)</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Служба</label>
+                        <select class="form-select" name="service_id" required>
+                            <option value="">Оберіть службу...</option>
+                            {% for service in services %}
+                            <option value="{{ service.id }}">{{ service.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-military">
+                        <i class="bi bi-upload"></i> Імпортувати
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-military text-white">
+                <h5 class="card-title mb-0">Інструкція</h5>
+            </div>
+            <div class="card-body">
+                <ol class="mb-0">
+                    <li class="mb-2">Підготуйте файл Excel з колонками:
+                        <ul>
+                            <li>Код</li>
+                            <li>Найменування</li>
+                            <li>Кількість</li>
+                            <li>Од. виміру</li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">Оберіть службу, для якої імпортуються залишки</li>
+                    <li>Натисніть кнопку "Імпортувати"</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
