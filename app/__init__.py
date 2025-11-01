@@ -48,14 +48,14 @@ def create_app(config_name='default'):
     app.cli.add_command(create_admin_command)
     # Register blueprints
     from app.auth import auth_bp
-    from app.docs import docs_bp
+    from app.documents import documents_bp
     from app.reports import reports_bp
     from app.api import api_bp
     from app.main import main_bp
     
     app.register_blueprint(main_bp)  # Реєструємо першим, бо він обробляє корінь '/'
     app.register_blueprint(auth_bp)
-    app.register_blueprint(docs_bp)
+    app.register_blueprint(documents_bp)
     app.register_blueprint(reports_bp)
     app.register_blueprint(api_bp)
     

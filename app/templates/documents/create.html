@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Створення документа{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Створення нового документа</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                {{ csrf_token() }}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="number" class="form-label">Номер документа</label>
+                            <input type="text" class="form-control" id="number" name="number" placeholder="Введіть номер" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Дата документа</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="doc_type" class="form-label">Тип документа</label>
+                            <select class="form-select" id="doc_type" name="doc_type" required>
+                                <option value="">Оберіть тип...</option>
+                                <option value="receipt">Надходження</option>
+                                <option value="issue">Видача</option>
+                                <option value="return">Повернення</option>
+                                <option value="transfer">Переміщення</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="sender" class="form-label">Відправник</label>
+                            <input type="text" class="form-control" id="sender" name="sender" placeholder="Хто передає" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="receiver" class="form-label">Отримувач</label>
+                            <input type="text" class="form-control" id="receiver" name="receiver" placeholder="Хто приймає" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Опис</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Додаткова інформація"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <a href="{{ url_for('documents.index') }}" class="btn btn-secondary">Скасувати</a>
+                    <button type="submit" class="btn btn-military">Зберегти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
