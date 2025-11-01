@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Перегляд документа{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Документ #{{ document.number }}</h2>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Тип:</strong> {{ document.doc_type }}</p>
+            <p><strong>Дата:</strong> {{ document.date.strftime('%d.%m.%Y') }}</p>
+            <p><strong>Статус:</strong> {{ document.status }}</p>
+            <hr />
+            <p>Деталі документа поки відсутні.</p>
+            <a href="{{ url_for('docs.index') }}" class="btn btn-secondary">Назад</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
